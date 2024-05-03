@@ -1,3 +1,10 @@
+import { BrowserRouter } from "react-router-dom";
+import MainRoutes from "./shared/routes/main-routes";
+
 export default function App() {
-  return <div className="text-3xl">App</div>;
+  return (
+    <BrowserRouter>
+      <MainRoutes />
+    </BrowserRouter>
+  );
 }
