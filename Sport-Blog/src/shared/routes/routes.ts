@@ -1,4 +1,5 @@
 import About from "../../pages/About";
+import Dashboard from "../../pages/Dashboard";
 import Home from "../../pages/Home";
 import Search from "../../pages/Search";
 import SignIn from "../../pages/SignIn";
@@ -10,6 +11,11 @@ export const PUBLIC_ROUTES: RouterModel[] = [
     path: "",
     element: Home,
     title: "Home",
+  },
+  {
+    path: "/dashboard",
+    element: Dashboard,
+    title: "Dashboard",
   },
   {
     path: "/about",
