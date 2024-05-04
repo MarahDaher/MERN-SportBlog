@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import User from "../models/user.model";
 import bcryptjs from "bcryptjs";
-import { errorHandler } from "../utils/error";
+import { ErrorHandler } from "../utils/errorHandler";
 
 export const signUp = async (
   req: express.Request,
@@ -18,18 +18,15 @@ export const signUp = async (
     email === "" ||
     password === ""
   ) {
-    next(errorHandler(400, "All fields are required"));
+    return next(new ErrorHandler(400, "All fields are required"));
   }
 
-  const hashedPassword = bcryptjs.hashSync(password, 10);
-
-  const newUser = new User({ username, email, password: hashedPassword });
-
   try {
+    const hashedPassword = bcryptjs.hashSync(password, 10);
+    const newUser = new User({ username, email, password: hashedPassword });
     await newUser.save();
-
-    res.status(200).json(newUser);
+    res.send(newUser);
   } catch (error: any) {
-    next(error);
+    next(new ErrorHandler(500, error.message || "Failed to register user"));
   }
 };
