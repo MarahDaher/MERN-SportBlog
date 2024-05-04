@@ -1,11 +1,13 @@
 import express, { Express } from "express";
 import { PORT } from "./config";
 import { connectDB } from "./database";
-import routes from "./routes/routes";
+import apiRoutes from "./routes/routes";
 
 const app: Express = express();
+// Allow send json in the body request
+app.use(express.json());
 
-app.use("/", routes);
+app.use("/api", apiRoutes);
 
 connectDB().then(() => {
   app.listen(PORT, () => {

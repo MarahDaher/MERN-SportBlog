@@ -1,9 +1,11 @@
 import { Router } from "express";
 
+import userRoutes from "./user.route";
+import authRoutes from "./auth.route";
+
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.send("Express + TypeScript Server");
-});
+router.use("/users", userRoutes);
+router.use("/auth", authRoutes);
 
 export default router;
