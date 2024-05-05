@@ -46,15 +46,16 @@ export const signIn = async (
   try {
     const validUser = await User.findOne({ email });
     if (!validUser) {
-      return next(new ErrorHandler(400, "Invalid credentials"));
+      return next(new ErrorHandler(400, "Email doesn't exist"));
     }
 
     const isPasswordValid = bcryptjs.compareSync(
       password,
       validUser.password || ""
     );
+
     if (!isPasswordValid) {
-      return next(new ErrorHandler(400, "Invalid credentials"));
+      return next(new ErrorHandler(400, "Invalid Password"));
     }
 
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET || "");
