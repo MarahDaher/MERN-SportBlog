@@ -3,15 +3,24 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signIn } from "../shared/api/auth";
 import { LoginUserModel } from "../shared/models/user.model";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../shared/redux/user/userSlice";
 
 export default function SignIn() {
   const [formData, setFormData] = useState<LoginUserModel>({
     email: "",
     password: "",
   });
-  const [errorMessage, setErrorMessage] = useState<any>(null);
-  const [loading, setLoading] = useState(false);
 
+  const { loading, error: errorMessage } = useSelector(
+    (state: any) => state.user
+  );
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleChange = (e: { target: { id: any; value: string } }) => {
@@ -20,16 +29,15 @@ export default function SignIn() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setLoading(true);
-    setErrorMessage(null);
+    dispatch(signInStart());
 
     const res = await signIn(formData);
-    setLoading(false);
+    dispatch(signInSuccess(res));
 
     if (res.success) {
       navigate("/");
     } else {
-      setErrorMessage(res.message || "An error occurred");
+      dispatch(signInFailure(res.message));
     }
   };
 
