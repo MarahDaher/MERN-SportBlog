@@ -11,30 +11,36 @@ export const PUBLIC_ROUTES: RouterModel[] = [
     path: "",
     element: Home,
     title: "Home",
+    isPrivate: true,
   },
   {
     path: "/dashboard",
     element: Dashboard,
     title: "Dashboard",
+    isPrivate: true,
   },
   {
     path: "/about",
     element: About,
     title: "About",
+    isPrivate: true,
   },
   {
     path: "/sign-in",
     element: SignIn,
     title: "Sign In",
+    isPrivate: false,
   },
   {
     path: "/sign-up",
     element: SignUp,
     title: "Sign Up",
+    isPrivate: false,
   },
   {
     path: "/search",
     element: Search,
     title: "Search",
+    isPrivate: false,
   },
 ];
