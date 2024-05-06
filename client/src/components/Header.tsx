@@ -4,11 +4,16 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon, FaSun } from "react-icons/fa";
 
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTheme } from "../shared/redux/theme/themeSlice";
 
 export default function Header() {
   const path = useLocation().pathname;
+  const dispatch = useDispatch();
+
   const { currentUser } = useSelector((state: any) => state.user);
+  const { theme } = useSelector((state: any) => state.theme);
+
   const user = currentUser?.data;
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -49,10 +54,9 @@ export default function Header() {
             className="w-12 h-10 hidden sm:inline"
             color="gray"
             pill
-            //   onClick={() => dispatch(toggleTheme())}
+            onClick={() => dispatch(toggleTheme())}
           >
-            <FaMoon />
-            {/* {theme === 'light' ? <FaSun /> : <FaMoon />} */}
+            {theme === "light" ? <FaSun /> : <FaMoon />}
           </Button>
           {user ? (
             <Dropdown
